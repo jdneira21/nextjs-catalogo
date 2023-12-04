@@ -1,0 +1,46 @@
+### PRODUCTOS
+GET http://localhost:3000/api/productos/
+
+### CREAR PRODUCTO
+POST http://localhost:3000/api/productos
+content-type: application/json
+
+{
+  "titulo": "Arroz con Marizcos",
+  "precio": 50.5,
+  "categoria_id": 1
+}
+
+### CATEGORIAS
+GET http://localhost:3000/api/categorias
+
+### CATEGORIAID
+GET http://localhost:3000/api/categorias/1
+
+### ELIMINAR CATEGORIA
+DELETE http://localhost:3000/api/categorias/1
+
+### CREAR CATEGORIA
+POST http://localhost:3000/api/categorias
+content-type: application/json
+
+{
+  "nombre": "Sopas4"
+}
+
+### ACTUALIZAR CATEGORIA
+PATCH  http://localhost:3000/api/categorias/sopas3
+content-type: application/json
+
+{
+  "nombre": "Sopas3"
+}
+
+
+### CREAR CATEGORIA
+POST https://catalogo-api.onrender.com/categorias
+content-type: application/json
+
+{
+  "nombre": "Carnes"
+}
