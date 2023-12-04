@@ -69,7 +69,7 @@ export default function FormCategory() {
   }, [objCategory])
 
   return (
-    <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+    <form className='tw-flex flex-col' onSubmit={handleSubmit(onSubmit)}>
       <DialogContent className='!py-2 !px-1.5 flex flex-col'>
         <TextField
           {...register('nameCategory', { required: 'Categoría' })}
