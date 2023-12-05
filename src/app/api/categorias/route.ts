@@ -4,8 +4,7 @@ import slugify from 'slugify'
 
 export async function GET() {
   const notes = await prisma.categoria.findMany()
-  console.log(notes)
-  return NextResponse.json({ msg: 'conchatumadre' })
+  return NextResponse.json(notes)
 }
 
 export async function POST(request: Request) {
