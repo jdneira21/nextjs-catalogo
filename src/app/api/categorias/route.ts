@@ -3,8 +3,9 @@ import { NextResponse } from 'next/server'
 import slugify from 'slugify'
 
 export async function GET() {
-  const notes = await prisma.categoria.findMany()
-  return NextResponse.json(notes)
+  // const notes = await prisma.categoria.findMany()
+  // console.log(notes)
+  return NextResponse.json({ msg: 'conchatumadre' })
 }
 
 export async function POST(request: Request) {
