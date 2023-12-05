@@ -66,11 +66,11 @@ export default function FormCategory() {
     if (objCategory) {
       reset({ nameCategory: objCategory.nombre })
     }
-  }, [objCategory])
+  }, [objCategory, reset])
 
   return (
-    <form className='tw-flex flex-col' onSubmit={handleSubmit(onSubmit)}>
-      <DialogContent className='!py-2 !px-1.5 flex flex-col'>
+    <form className='tw-flex tw-flex-col' onSubmit={handleSubmit(onSubmit)}>
+      <DialogContent className='!tw-py-2 !tw-px-1.5 tw-flex tw-flex-col'>
         <TextField
           {...register('nameCategory', { required: 'Categoría' })}
           autoFocus
@@ -81,11 +81,11 @@ export default function FormCategory() {
           inputProps={{ autoComplete: 'hidden' }}
         />
       </DialogContent>
-      <DialogActions className='!flex !justify-between col-span-full'>
+      <DialogActions className='!tw-flex !tw-justify-between tw-col-span-full'>
         <Button
           onClick={() => setStateDialogNewCategory(false)}
           startIcon={<RiCloseCircleFill />}
-          className='!capitalize'
+          className='!tw-capitalize'
           disableElevation
           variant='outlined'>
           Cancelar
@@ -93,7 +93,7 @@ export default function FormCategory() {
         <Button
           type='submit'
           startIcon={<TbSquareRoundedCheckFilled />}
-          className='!capitalize'
+          className='!tw-capitalize'
           disableElevation
           variant='contained'>
           Aceptar

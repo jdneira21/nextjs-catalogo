@@ -36,22 +36,22 @@ export default function DialogCategory() {
     if (data) {
       setCategories(data)
     }
-  }, [data])
+  }, [data, setCategories])
 
   return (
     <Dialog maxWidth={'lg'} open={stateDialogCategory}>
-      <DialogTitle className='!py-1 !px-2 !font-open-sans !text-[1.1rem] flex justify-between'>
+      <DialogTitle className='!tw-py-1 !tw-px-2 !tw-font-open-sans !tw-text-[1.1rem] tw-flex tw-justify-between'>
         Categorias
         <Button
           onClick={() => setStateDialogNewCategory(true)}
           disableElevation
           variant='contained'
           size='small'
-          className='!capitalize'>
+          className='!tw-capitalize'>
           Nueva Categoria
         </Button>
       </DialogTitle>
-      <DialogContent className='!p-0 flex flex-col'>
+      <DialogContent className='!tw-p-0 tw-flex tw-flex-col'>
         <TableContainer component={Paper}>
           <Table size='small' sx={{ minWidth: 460 }}>
             <TableHead>
@@ -68,10 +68,10 @@ export default function DialogCategory() {
                   <TableCell>{cat.nombre}</TableCell>
                   <TableCell align='center'>
                     <ButtonGroup variant='contained' size='small' disableElevation>
-                      <Button onClick={() => setStateDialogNewCategory(true, cat)} className='!capitalize'>
+                      <Button onClick={() => setStateDialogNewCategory(true, cat)} className='!tw-capitalize'>
                         Editar
                       </Button>
-                      <Button onClick={() => setStateDialogDeleteCategory(true, cat)} className='!capitalize'>
+                      <Button onClick={() => setStateDialogDeleteCategory(true, cat)} className='!tw-capitalize'>
                         Borrar
                       </Button>
                     </ButtonGroup>
@@ -82,11 +82,11 @@ export default function DialogCategory() {
           </Table>
         </TableContainer>
       </DialogContent>
-      <DialogActions className='!flex !justify-between col-span-full'>
+      <DialogActions className='!tw-flex !tw-justify-between tw-col-span-full'>
         <Button
           onClick={() => setStateDialogCategory(false)}
           startIcon={<RiCloseCircleFill />}
-          className='!capitalize'
+          className='!tw-capitalize'
           disableElevation
           variant='outlined'>
           Cerrar

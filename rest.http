@@ -29,11 +29,12 @@ content-type: application/json
 }
 
 ### ACTUALIZAR CATEGORIA
-PATCH  http://localhost:3000/api/categorias/sopas3
+PUT http://localhost:3000/api/categorias
 content-type: application/json
 
 {
-  "nombre": "Sopas3"
+  "id": 1,
+  "nombre": "3232"
 }
 
 

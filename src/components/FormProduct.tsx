@@ -135,7 +135,7 @@ export default function FormProduct() {
             <label className='tw-flex tw-items-center tw-gap-2 tw-py-1 tw-px-2 tw-place-items-center tw-bg-gray-800 tw-text-white tw-hover:bg-gray-900 tw-shadow-lg tw-rounded-md tw-cursor-pointer'>
               <BiUpload />
               <span className='tw-text-[0.8rem]'>Subir Imagen</span>
-              <input onChange={(e) => onChange(e)} type='file' className='hidden' />
+              <input onChange={(e) => onChange(e)} type='file' className='tw-hidden' />
             </label>
           </div>
         </div>

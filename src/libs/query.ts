@@ -33,12 +33,12 @@ export const agregarCategoria = async ({ nombre }: Partial<ICategoria>): Promise
   return await response.json()
 }
 
-export const actualizarCategoria = async ({ slug, nombre }: Partial<ICategoria>): Promise<ICategoria> => {
+export const actualizarCategoria = async ({ id, nombre }: Partial<ICategoria>): Promise<ICategoria> => {
   console.log('actualizarCategoria')
-  console.log(slug)
-  const response = await fetch(`/api/categorias/${slug}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ nombre: nombre }),
+  // console.log(slug)
+  const response = await fetch(`/api/categorias`, {
+    method: 'PUT',
+    body: JSON.stringify({ id, nombre }),
     headers: { 'Content-type': 'application/json' }
   })
   return await response.json()
@@ -47,9 +47,12 @@ export const actualizarCategoria = async ({ slug, nombre }: Partial<ICategoria>)
 export const eliminarCategoria = async ({ id }: Partial<ICategoria>): Promise<ICategoria> => {
   console.log('eliminarCategoria')
   // console.log(slug)
-  const response = await fetch(`/api/categorias/${id}`, {
-    method: 'DELETE'
+  const response = await fetch(`/api/categorias`, {
+    method: 'DELETE',
+    body: JSON.stringify({ id }),
+    headers: { 'Content-type': 'application/json' }
   })
+  
   return await response.json()
 }
 

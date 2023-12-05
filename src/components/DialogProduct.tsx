@@ -6,7 +6,7 @@ export default function DialogProduct() {
   const stateDialogProduct = useStore((state) => state.stateDialogProduct)
   return (
     <Dialog maxWidth={'sm'} fullWidth open={stateDialogProduct}>
-      <DialogTitle className='!py-1 !px-2 !font-open-sans !text-[1.1rem]'>Producto</DialogTitle>
+      <DialogTitle className='!tw-py-1 !tw-px-2 !tw-font-open-sans !tw-text-[1.1rem]'>Producto</DialogTitle>
       <FormProduct />
     </Dialog>
   )
