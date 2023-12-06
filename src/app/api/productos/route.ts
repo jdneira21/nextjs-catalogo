@@ -7,7 +7,8 @@ export async function GET() {
   const notes = await prisma.producto.findMany({
     include: {
       categoria: true
-    }
+    },
+    where: { status: true }
   })
   return NextResponse.json(notes)
 }
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
   console.log('slug')
 
   uploadBase64Data(slug, imagenBase64)
-  
+
   console.log('uploadBase64Data(slug, imagenBase64)')
 
   // const category = await prisma.categoria.create({
@@ -42,7 +43,6 @@ export async function POST(request: Request) {
     },
     include: { categoria: true }
   })
-
 
   return NextResponse.json(producto)
 }

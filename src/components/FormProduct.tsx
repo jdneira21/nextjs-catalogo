@@ -23,6 +23,7 @@ type Area = {
 }
 
 export default function FormProduct() {
+  const [disabled, setDisabled] = useState(true)
   const [img, setImg] = useState('')
   const [zoom, setZoom] = useState(1)
   const setStateDialogProduct = useStore((state) => state.setStateDialogProduct)
@@ -154,6 +155,7 @@ export default function FormProduct() {
           startIcon={<TbSquareRoundedCheckFilled />}
           className='!capitalize'
           disableElevation
+          disabled={disabled}
           variant='contained'>
           Aceptar
         </Button>

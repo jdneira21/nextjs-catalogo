@@ -2,7 +2,7 @@
 import { actualizarCategoria, agregarCategoria, queryClient } from '@/libs/query'
 import { Button, DialogActions, DialogContent, TextField } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { TbSquareRoundedCheckFilled } from 'react-icons/tb'
@@ -14,6 +14,7 @@ interface IForm {
 }
 
 export default function FormCategory() {
+  const [disabled, setDisabled] = useState(false)
   const setStateDialogNewCategory = useStore((store) => store.setStateDialogNewCategory)
   const objCategory = useStore((store) => store.objCategory)
 
@@ -36,9 +37,11 @@ export default function FormCategory() {
   } = useForm<IForm>({ mode: 'onSubmit' })
 
   const onSubmit = ({ nameCategory }: IForm) => {
+    setDisabled(true)
+
     if (objCategory.id) {
       updateCategory(
-        { slug: objCategory.slug, nombre: nameCategory },
+        { id: objCategory.id, nombre: nameCategory },
         {
           onSuccess: () => {
             setStateDialogNewCategory(false, {} as ICategoria)
@@ -95,6 +98,7 @@ export default function FormCategory() {
           startIcon={<TbSquareRoundedCheckFilled />}
           className='!tw-capitalize'
           disableElevation
+          disabled={disabled}
           variant='contained'>
           Aceptar
         </Button>

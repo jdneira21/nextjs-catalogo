@@ -35,12 +35,13 @@ export const agregarCategoria = async ({ nombre }: Partial<ICategoria>): Promise
 
 export const actualizarCategoria = async ({ id, nombre }: Partial<ICategoria>): Promise<ICategoria> => {
   console.log('actualizarCategoria')
-  // console.log(slug)
+  console.log({ id, nombre })
   const response = await fetch(`/api/categorias`, {
     method: 'PUT',
     body: JSON.stringify({ id, nombre }),
     headers: { 'Content-type': 'application/json' }
   })
+
   return await response.json()
 }
 

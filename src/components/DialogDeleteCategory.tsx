@@ -1,12 +1,14 @@
 import { eliminarCategoria, queryClient } from '@/libs/query'
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { TbSquareRoundedCheckFilled } from 'react-icons/tb'
 import { ICategoria } from '../interfaces'
 import useStore from '../store/useStore'
 
 export default function DialogDeleteCategory() {
+  const [disabled, setDisabled] = useState(false)
   const stateDialogDeleteCategory = useStore((state) => state.stateDialogDeleteCategory)
   const setStateDialogDeleteCategory = useStore((state) => state.setStateDialogDeleteCategory)
   const objDeleteCategory = useStore((store) => store.objDeleteCategory)
@@ -17,12 +19,16 @@ export default function DialogDeleteCategory() {
   })
 
   const confirmDeleteCategory = () => {
+
+    setDisabled(true)
+
     deleteCategory(
       { id: objDeleteCategory.id },
       {
         onSuccess: () => {
           setStateDialogDeleteCategory(false, {} as ICategoria)
           queryClient.prefetchQuery({ queryKey: ['categorias'] })
+          setDisabled(false)
         }
       }
     )
@@ -59,6 +65,7 @@ export default function DialogDeleteCategory() {
           startIcon={<TbSquareRoundedCheckFilled />}
           className='!capitalize'
           disableElevation
+          disabled={disabled}
           variant='contained'>
           Aceptar
         </Button>
