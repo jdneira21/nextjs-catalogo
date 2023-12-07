@@ -14,6 +14,19 @@ import ReactSelect from 'react-select'
 import { IProducto } from '../interfaces'
 import useStore from '../store/useStore'
 
+
+const pictureUploaderOptions = {
+  clientAllowedFormats: ['jpg', 'jpeg', 'png', 'gif'], // allowed file formats
+  resourceType: 'image', // resource type, either 'image' or 'video'
+  cropping: true, // cropping is enabled
+  croppingAspectRatio: 1, // square aspect ratio
+  croppingShowDimensions: true, // show cropping dimensions
+  croppingValidateDimensions: true, // validate image dimensions after cropping
+  maxFileSize: 10000000, // max file size in bytes (10 MB)
+  folder: 'images', // Cloudinary folder to upload to
+  sources: ['local', 'url', 'camera', 'google_drive'] // upload sources, either 'local', 'url', 'camera' or 'google_drive'
+}
+
 interface IForm extends IProducto {}
 
 type Area = {
@@ -24,6 +37,14 @@ type Area = {
 }
 
 export default function FormProduct() {
+  // const handleUploadSuccess = (info) => {
+  //   console.log('Upload success:', info)
+  // }
+
+  // const handleUploadFailure = (error) => {
+  //   console.error('Upload error:', error)
+  // }
+
   const [disabled, setDisabled] = useState(false)
   const [img, setImg] = useState('')
   const [zoom, setZoom] = useState(1)
@@ -178,6 +199,41 @@ export default function FormProduct() {
             )}
           />
         </div>
+
+
+        {/* <CloudinaryUploadWidget
+          cloudName='dlltfgm4b'
+          uploadPreset='yp5ecxto'
+          buttonStyle={{ border: '1px solid black', padding: '10px' }}
+          buttonClass='custom-class' // className for button element
+          buttonText='Choose Image'
+          onUploadSuccess={handleUploadSuccess}
+          onUploadFailure={handleUploadFailure}
+          options={pictureUploaderOptions}
+        /> */}
+
+
+
+        {/* <CloudinaryUploadWidget
+      cloudName="your-cloud-name"
+      uploadPreset="your-upload-preset"
+      options={pictureUploaderOptions}
+      onUploadSuccess={handleUploadSuccess}
+      onUploadFailure={handleUploadFailure}
+    > */}
+        {/* <button
+          style={{
+            color: 'white',
+            border: 'none',
+            width: '120px',
+            backgroundColor: '#bbb',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+          className='custom-class'>
+          Upload Picture
+        </button> */}
+        {/* </CloudinaryUploadWidget> */}
         <div className='tw-col-span-2'>
           {objProduct.id && !img.length ? (
             <Image alt='dasdsa' width='230' height='130' src={`${objProduct.imagen}`} />
