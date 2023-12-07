@@ -40,6 +40,7 @@ export default function PagePanel() {
       <div className='tw-flex tw-flex-col tw-gap-4 tw-p-2'>
         <div className='tw-flex tw-gap-2'>
           <CloudinaryUploadWidget
+          
             cloudName='dlltfgm4b'
             uploadPreset='yp5ecxto'
             options={pictureUploaderOptions}
