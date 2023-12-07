@@ -8,7 +8,8 @@ export async function GET() {
     include: {
       categoria: true
     },
-    where: { status: true }
+    where: { status: true },
+    orderBy: { id: 'desc' }
   })
   return NextResponse.json(notes)
 }
@@ -41,6 +42,43 @@ export async function POST(request: Request) {
       categoria_id,
       slug: slug
     },
+    include: { categoria: true }
+  })
+
+  return NextResponse.json(producto)
+}
+
+export async function PUT(request: Request) {
+  const { id, nombre, precio, descripcion, imagen, imagenBase64, categoria_id } = await request.json()
+
+  const slug = slugify(nombre, { lower: true })
+
+  if (imagenBase64) {
+    uploadBase64Data(slug, imagenBase64)
+  }
+
+  const producto = await prisma.producto.update({
+    where: { id },
+    data: {
+      nombre,
+      precio: +precio,
+      descripcion,
+      imagen: !imagenBase64 ? imagen : slug + '.jpg',
+      imagenBase64: '',
+      categoria_id,
+      slug: slug
+    },
+    include: { categoria: true }
+  })
+
+  return NextResponse.json(producto)
+}
+
+export async function DELETE(request: Request) {
+  const { id } = await request.json()
+  const producto = await prisma.producto.update({
+    where: { id },
+    data: { status: false },
     include: { categoria: true }
   })
 

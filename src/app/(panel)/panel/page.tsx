@@ -1,5 +1,9 @@
 'use client'
 import DialogCategory from '@/components/DialogCategory'
+import DialogDeleteCategory from '@/components/DialogDeleteCategory'
+import DialogDeleteProduct from '@/components/DialogDeleteProduct'
+import DialogNewCategory from '@/components/DialogNewCategory'
+import DialogProduct from '@/components/DialogProduct'
 import Table from '@/components/Table'
 import useStore from '@/store/useStore'
 import { Button } from '@mui/material'
@@ -36,6 +40,10 @@ export default function PagePanel() {
       </div> */}
       </div>
       <DialogCategory />
+      <DialogNewCategory />
+      <DialogDeleteCategory />
+      <DialogDeleteProduct />
+      <DialogProduct />
     </>
   )
 }

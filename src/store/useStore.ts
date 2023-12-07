@@ -7,9 +7,12 @@ interface State {
   stateDialogNewCategory: boolean
   stateDialogEditCategory: boolean
   stateDialogDeleteCategory: boolean
+  stateDialogDeleteProduct: boolean
   stateDialogProduct: boolean
   objCategory: ICategoria
+  objProduct: IProducto
   objDeleteCategory: ICategoria
+  objDeleteProduct: IProducto
   categories: ICategoria[]
 
   imageCrop: string
@@ -22,7 +25,9 @@ interface Action {
   setStateDialogNewCategory: (bool: boolean, categoria?: ICategoria) => void
   setStateDialogDeleteCategory: (bool: boolean, categoria?: ICategoria) => void
 
-  setStateDialogProduct: (bool: boolean) => void
+  setStateDialogProduct: (bool: boolean, product?: IProducto) => void
+  setStateDialogDeleteProduct: (bool: boolean, product?: IProducto) => void
+
   setCategories: (array: ICategoria[]) => void
 
   setImageCrop: (dataImage: string) => void
@@ -35,9 +40,12 @@ const initialState: State = {
   stateDialogNewCategory: false,
   stateDialogEditCategory: false,
   stateDialogDeleteCategory: false,
+  stateDialogDeleteProduct: false,
   stateDialogProduct: false,
   objCategory: {} as ICategoria,
+  objProduct: {} as IProducto,
   objDeleteCategory: {} as ICategoria,
+  objDeleteProduct: {} as IProducto,
   categories: [],
 
   imageCrop: ''
@@ -73,12 +81,17 @@ export default create<State & Action>()((set, get) => ({
     console.log(objCategory)
     set({ stateDialogNewCategory: bool, objCategory: objCategory ?? ({} as ICategoria) })
   },
+
   setStateDialogDeleteCategory: (bool, objDeleteCategory) => {
     set({ stateDialogDeleteCategory: bool, objDeleteCategory: objDeleteCategory ?? ({} as ICategoria) })
   },
 
-  setStateDialogProduct: (bool) => {
-    set({ stateDialogProduct: bool })
+  setStateDialogDeleteProduct: (bool, objDeleteProduct) => {
+    set({ stateDialogDeleteProduct: bool, objDeleteProduct: objDeleteProduct ?? ({} as IProducto) })
+  },
+
+  setStateDialogProduct: (bool, objProduct) => {
+    set({ stateDialogProduct: bool, objProduct: objProduct ?? ({} as IProducto) })
   },
 
   setCategories: (array) => {

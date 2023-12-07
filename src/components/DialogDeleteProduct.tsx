@@ -1,32 +1,33 @@
-import { eliminarCategoria, queryClient } from '@/libs/query'
+import { IProducto } from '@/interfaces'
+import { eliminarProducto, queryClient } from '@/libs/query'
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { TbSquareRoundedCheckFilled } from 'react-icons/tb'
-import { ICategoria } from '../interfaces'
 import useStore from '../store/useStore'
 
-export default function DialogDeleteCategory() {
+export default function DialogDeleteProduct() {
   const [disabled, setDisabled] = useState(false)
-  const stateDialogDeleteCategory = useStore((state) => state.stateDialogDeleteCategory)
-  const setStateDialogDeleteCategory = useStore((state) => state.setStateDialogDeleteCategory)
-  const objDeleteCategory = useStore((store) => store.objDeleteCategory)
+  const stateDialogDeleteProduct = useStore((state) => state.stateDialogDeleteProduct)
+  const setStateDialogDeleteProduct = useStore((state) => state.setStateDialogDeleteProduct)
+  const objDeleteProduct = useStore((store) => store.objDeleteProduct)
 
-  const { mutateAsync: deleteCategory } = useMutation({
-    mutationKey: ['eliminarCategoria'],
-    mutationFn: eliminarCategoria
+  const { mutateAsync: deleteProduct } = useMutation({
+    mutationKey: ['eliminarProducto'],
+    mutationFn: eliminarProducto
   })
 
-  const confirmDeleteCategory = () => {
+  const confirmDeleteProduct = () => {
+    console.log('confirmDeleteProduct')
     setDisabled(true)
 
-    deleteCategory(
-      { id: objDeleteCategory.id },
+    deleteProduct(
+      { id: objDeleteProduct.id },
       {
         onSuccess: () => {
-          setStateDialogDeleteCategory(false, {} as ICategoria)
-          queryClient.prefetchQuery({ queryKey: ['categorias'] })
+          setStateDialogDeleteProduct(false, {} as IProducto)
+          queryClient.prefetchQuery({ queryKey: ['productos'] })
           setDisabled(false)
         }
       }
@@ -34,14 +35,14 @@ export default function DialogDeleteCategory() {
   }
 
   return (
-    <Dialog maxWidth={'lg'} open={stateDialogDeleteCategory}>
+    <Dialog maxWidth={'lg'} open={stateDialogDeleteProduct}>
       <DialogTitle className='!tw-py-1 !tw-px-2 !tw-font-open-sans !tw-text-[1.1rem]'>
-        Confirmar Eliminar Categoría <b>{objDeleteCategory.nombre}</b>
+        Confirmar Eliminar Producto <b>{objDeleteProduct.nombre}</b>
       </DialogTitle>
       {/* <DialogContent className='!py-2 !px-1.5 flex flex-col'>Confirmar</DialogContent> */}
       <DialogActions className='!tw-flex !tw-justify-between tw-col-span-full'>
         <Button
-          onClick={() => setStateDialogDeleteCategory(false)}
+          onClick={() => setStateDialogDeleteProduct(false)}
           startIcon={<RiCloseCircleFill />}
           className='!tw-capitalize'
           disableElevation
@@ -49,7 +50,7 @@ export default function DialogDeleteCategory() {
           Cancelar
         </Button>
         <Button
-          onClick={confirmDeleteCategory}
+          onClick={confirmDeleteProduct}
           startIcon={<TbSquareRoundedCheckFilled />}
           className='!tw-capitalize'
           disableElevation

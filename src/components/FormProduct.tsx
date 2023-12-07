@@ -1,8 +1,8 @@
 'use client'
-import { agregarProducto, queryClient } from '@/libs/query'
+import { agregarProducto, editarProducto, queryClient } from '@/libs/query'
 import { Button, DialogActions, DialogContent, TextField } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Cropper, getCroppedImg } from 'react-cropper-custom'
 import 'react-cropper-custom/dist/index.css'
 import { Controller, useForm } from 'react-hook-form'
@@ -23,10 +23,11 @@ type Area = {
 }
 
 export default function FormProduct() {
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(false)
   const [img, setImg] = useState('')
   const [zoom, setZoom] = useState(1)
   const setStateDialogProduct = useStore((state) => state.setStateDialogProduct)
+  const objProduct = useStore((store) => store.objProduct)
   const categories = useStore((state) => state.categories)
 
   const setImageCrop = useStore((state) => state.setImageCrop)
@@ -36,6 +37,11 @@ export default function FormProduct() {
   const { mutateAsync: addProduct } = useMutation({
     mutationKey: ['agregarProducto'],
     mutationFn: agregarProducto
+  })
+
+  const { mutateAsync: updateProduct } = useMutation({
+    mutationKey: ['editarProducto'],
+    mutationFn: editarProducto
   })
 
   const {
@@ -48,11 +54,39 @@ export default function FormProduct() {
   } = useForm<IForm>({ mode: 'onSubmit' })
 
   const onSubmit = (data: IForm) => {
-    console.log(imageCrop)
+    const { nombre, precio, descripcion, categoria } = data
+
+    if (objProduct.id) {
+      setDisabled(true)
+      updateProduct(
+        {
+          id: objProduct.id,
+          nombre,
+          precio,
+          descripcion,
+          imagen: objProduct.imagen,
+          imagenBase64: imageCrop,
+          categoria_id: categoria.id
+        },
+        {
+          onSuccess: (data) => {
+            console.log(data)
+            setStateDialogProduct(false)
+            queryClient.prefetchQuery({ queryKey: ['productos'] })
+            reset(data)
+          },
+          onError: (data) => {
+            console.log(data)
+          }
+        }
+      )
+      return
+    }
 
     if (!imageCrop.length) return
 
-    const { nombre, precio, descripcion, categoria } = data
+    setDisabled(true)
+    // const { nombre, precio, descripcion, categoria } = data
 
     addProduct(
       { nombre, precio, descripcion, imagen: '', imagenBase64: imageCrop, categoria_id: categoria.id },
@@ -83,6 +117,20 @@ export default function FormProduct() {
     if (e.target.files === null) return
     setImg(URL.createObjectURL(e.target.files[0]))
   }
+
+  const cancel = () => {
+    setStateDialogProduct(false)
+    setImg('')
+    // resetImageCrop('')
+    setImageCrop('')
+  }
+
+  useEffect(() => {
+    if (objProduct) {
+      console.log(objProduct)
+      reset(objProduct)
+    }
+  }, [objProduct, reset])
 
   return (
     <form className='tw-flex tw-flex-col' onSubmit={handleSubmit(onSubmit)}>
@@ -130,7 +178,17 @@ export default function FormProduct() {
           />
         </div>
         <div className='tw-col-span-2'>
-          <Cropper src={img} zoom={zoom} aspect={1} onZoomChange={setZoom} onCropComplete={onCropComplete} />
+          {objProduct.id && !img.length ? (
+            <img
+              alt='dasdsa'
+              width='230'
+              height='130'
+              src={`/${objProduct.imagen}`}
+            />
+          ) : (
+            <Cropper src={img} zoom={zoom} aspect={400 / 700} onZoomChange={setZoom} onCropComplete={onCropComplete} />
+          )}
+          {/* {img} */}
 
           <div className='tw-flex tw-items-center tw-justify-center'>
             <label className='tw-flex tw-items-center tw-gap-2 tw-py-1 tw-px-2 tw-place-items-center tw-bg-gray-800 tw-text-white tw-hover:bg-gray-900 tw-shadow-lg tw-rounded-md tw-cursor-pointer'>
@@ -143,7 +201,7 @@ export default function FormProduct() {
       </DialogContent>
       <DialogActions className='!tw-flex !tw-justify-between tw-col-span-full'>
         <Button
-          onClick={() => setStateDialogProduct(false)}
+          onClick={cancel}
           startIcon={<RiCloseCircleFill />}
           className='!capitalize'
           disableElevation

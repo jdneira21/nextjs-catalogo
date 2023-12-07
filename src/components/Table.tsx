@@ -1,22 +1,21 @@
 'use client'
 import { getProductos } from '@/libs/query'
+import { Button, ButtonGroup } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { MRT_ColumnDef, MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { MRT_Localization_ES } from 'material-react-table/locales/es'
 import { useMemo } from 'react'
 import { IProducto } from '../interfaces'
-import DialogDeleteCategory from './DialogDeleteCategory'
-import DialogNewCategory from './DialogNewCategory'
-import DialogProduct from './DialogProduct'
+
+import useStore from '../store/useStore'
 
 export default function Table() {
+  const setStateDialogProduct = useStore((state) => state.setStateDialogProduct)
+  const setStateDialogDeleteProduct = useStore((state) => state.setStateDialogDeleteProduct)
   const { data, isLoading } = useQuery<IProducto[]>({
     queryKey: ['productos'],
     queryFn: getProductos
   })
-
-  console.log(data)
-  console.log('productos')
 
   const columns = useMemo<MRT_ColumnDef<IProducto>[]>(
     () => [
@@ -34,11 +33,11 @@ export default function Table() {
         id: 'precio',
         header: 'Precio'
       },
-      {
-        accessorFn: (originalRow) => originalRow.descripcion,
-        id: 'descripcion',
-        header: 'Producto'
-      },
+      // {
+      //   accessorFn: (originalRow) => originalRow.descripcion,
+      //   id: 'descripcion',
+      //   header: 'Desc'
+      // },
       {
         accessorFn: (originalRow) => originalRow.categoria.nombre,
         id: 'categoria',
@@ -46,7 +45,17 @@ export default function Table() {
       },
       {
         // accessorFn: (originalRow) => originalRow.categoria.nombre,
-        header: 'Acciones'
+        header: 'Acciones',
+        Cell: ({ row }) => (
+          <div className='flex justify-center gap-x-2 transition opacity-0 group-hover:opacity-100'>
+            <ButtonGroup variant='contained' size='small' disableElevation>
+              <Button onClick={() => setStateDialogProduct(true, row.original)} className='!tw-capitalize'>
+                Editar
+              </Button>
+              <Button onClick={() => setStateDialogDeleteProduct(true, row.original)} className='!tw-capitalize'>Borrar</Button>
+            </ButtonGroup>
+          </div>
+        )
       }
     ],
     []
@@ -61,14 +70,12 @@ export default function Table() {
     state: { isLoading },
     // enable
     initialState: { density: 'compact' },
-    localization: MRT_Localization_ES
+    localization: MRT_Localization_ES,
+    renderRowActions: ({ row, table }) => <div>hola</div>
   })
   return (
     <>
       <MaterialReactTable table={table} />
-      <DialogNewCategory />
-      <DialogDeleteCategory />
-      <DialogProduct />
     </>
   )
 }

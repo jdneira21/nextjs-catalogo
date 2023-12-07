@@ -53,7 +53,7 @@ export const eliminarCategoria = async ({ id }: Partial<ICategoria>): Promise<IC
     body: JSON.stringify({ id }),
     headers: { 'Content-type': 'application/json' }
   })
-  
+
   return await response.json()
 }
 
@@ -78,5 +78,47 @@ export const agregarProducto = async ({
     body: JSON.stringify({ nombre, precio, descripcion, imagen, imagenBase64, categoria_id }),
     headers: { 'Content-type': 'application/json' }
   })
+  return await response.json()
+}
+
+export const editarProducto = async ({
+  id,
+  nombre,
+  precio,
+  descripcion,
+  imagen,
+  imagenBase64,
+  categoria_id
+}: Partial<IProducto>): Promise<IProducto> => {
+  // console.log({
+  //   id,
+  //   nombre,
+  //   precio,
+  //   descripcion,
+  //   imagen,
+  //   imagenBase64,
+  //   categoria_id
+  // })
+  const response = await fetch(`/api/productos`, {
+    method: 'PUT',
+    body: JSON.stringify({ id, nombre, precio, descripcion, imagen, imagenBase64, categoria_id }),
+    headers: { 'Content-type': 'application/json' }
+  })
+
+  console.log(response)
+
+  return await response.json()
+  // return { msg: 'true' }
+}
+
+export const eliminarProducto = async ({ id }: Partial<IProducto>): Promise<IProducto> => {
+  console.log('eliminarProducto')
+  // console.log(slug)
+  const response = await fetch(`/api/productos`, {
+    method: 'DELETE',
+    body: JSON.stringify({ id }),
+    headers: { 'Content-type': 'application/json' }
+  })
+
   return await response.json()
 }
