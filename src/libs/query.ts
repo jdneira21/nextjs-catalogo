@@ -18,6 +18,13 @@ export const getCategorias = async (): Promise<ICategoria[]> => {
   return await response.json()
 }
 
+export const getCategoriasBySlug = async (slug: string): Promise<ICategoria> => {
+  const response = await fetch(`/api/categorias/${slug}`)
+  console.log('getCategoriasBySlug')
+  // console.log(response)
+  return await response.json()
+}
+
 export const getCategoria = async (slug: string): Promise<ICategoria> => {
   const response = await fetch(`/api/categorias/${slug}`)
   return await response.json()
