@@ -1,6 +1,7 @@
 import { createReadStream } from 'fs'
 import { writeFile } from 'fs/promises'
 import { ImgurClient } from 'imgur'
+import { join } from 'path'
 
 const client = new ImgurClient({
   clientId: '0970ce14bb1c7ba',
@@ -9,7 +10,9 @@ const client = new ImgurClient({
 
 export const uploadBase64Data = async (slug: string, thumbnail: string): Promise<string> => {
   const base64Data = thumbnail.replace('data:image/jpeg;base64,', '')
-  const pathFile = `${process.cwd()}/tmp/${slug}.jpg`
+  // const pathFile = `${process.cwd()}/tmp/${slug}.jpg`
+  const pathFile = join(process.cwd(), `tmp/${slug}.jpg`)
+
   console.log(pathFile)
   await writeFile(pathFile, base64Data, 'base64')
   const response: any = await client.upload({
