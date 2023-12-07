@@ -10,6 +10,7 @@ const client = new ImgurClient({
 export const uploadBase64Data = async (slug: string, thumbnail: string): Promise<string> => {
   const base64Data = thumbnail.replace('data:image/jpeg;base64,', '')
   const pathFile = `${process.cwd()}/tmp/${slug}.jpg`
+  console.log(pathFile)
   await writeFile(pathFile, base64Data, 'base64')
   const response: any = await client.upload({
     image: createReadStream(pathFile),
