@@ -9,7 +9,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
   const productsBySlug = await prisma.categoria.findFirst({
     where: { slug },
     orderBy: { id: 'asc' },
-    include: { productos: true }
+    include: { productos: { where: { status: true } } }
   })
 
   // console.log(productsBySlug)

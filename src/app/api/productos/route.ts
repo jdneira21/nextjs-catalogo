@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   console.log(slug)
   console.log('slug')
 
-  uploadBase64Data(slug, imagenBase64)
+  const imagex = await uploadBase64Data(slug, imagenBase64)
 
   console.log('uploadBase64Data(slug, imagenBase64)')
 
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       nombre,
       precio: +precio,
       descripcion,
-      imagen: slug + '.jpg',
+      imagen: imagex,
       imagenBase64: '',
       categoria_id,
       slug: slug

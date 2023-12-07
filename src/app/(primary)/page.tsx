@@ -10,10 +10,10 @@ export default function PrimaryPage() {
   })
   return (
     <div className='tw-border tw-border-red-600'>
+      {/* <Image src={`https://i.imgur.com/gI4nMgO.jpg`} alt='' width={700} height={400} priority /> */}
       {data?.map((prod) => (
         <div key={prod.id}>
-          
-        <Image src={`/${prod.imagen}`} alt="" width={700} height={400} priority />
+          <Image src={`${prod.imagen}`} alt='' width={700} height={400} priority />
         </div>
       ))}
     </div>

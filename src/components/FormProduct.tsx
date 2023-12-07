@@ -2,6 +2,7 @@
 import { agregarProducto, editarProducto, queryClient } from '@/libs/query'
 import { Button, DialogActions, DialogContent, TextField } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
+import Image from 'next/image'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Cropper, getCroppedImg } from 'react-cropper-custom'
 import 'react-cropper-custom/dist/index.css'
@@ -179,12 +180,7 @@ export default function FormProduct() {
         </div>
         <div className='tw-col-span-2'>
           {objProduct.id && !img.length ? (
-            <img
-              alt='dasdsa'
-              width='230'
-              height='130'
-              src={`/${objProduct.imagen}`}
-            />
+            <Image alt='dasdsa' width='230' height='130' src={`${objProduct.imagen}`} />
           ) : (
             <Cropper src={img} zoom={zoom} aspect={400 / 700} onZoomChange={setZoom} onCropComplete={onCropComplete} />
           )}
