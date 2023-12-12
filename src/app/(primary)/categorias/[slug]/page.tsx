@@ -3,6 +3,7 @@
 import { getCategoriasBySlug } from '@/libs/query'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 
 export default function CategoryPageSlug() {
   const params = useParams()
@@ -21,7 +22,10 @@ export default function CategoryPageSlug() {
   return (
     <div>
       {data?.productos.map((prod) => (
-        <div key={prod.id}>{prod.nombre}</div>
+        <>
+          <div key={prod.id}>{prod.nombre}</div>
+          <Image src={prod.imagen} width={700} height={400} alt={prod.nombre} />
+        </>
       ))}
     </div>
   )

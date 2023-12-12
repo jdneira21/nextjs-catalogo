@@ -3,8 +3,7 @@ import { agregarProducto, editarProducto, queryClient } from '@/libs/query'
 import { Button, DialogActions, DialogContent, TextField } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import Image from 'next/image'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { Cropper, getCroppedImg } from 'react-cropper-custom'
+import { useEffect, useState } from 'react'
 import 'react-cropper-custom/dist/index.css'
 import { Controller, useForm } from 'react-hook-form'
 import { BiUpload } from 'react-icons/bi'
@@ -13,48 +12,29 @@ import { TbSquareRoundedCheckFilled } from 'react-icons/tb'
 import ReactSelect from 'react-select'
 import { IProducto } from '../interfaces'
 import useStore from '../store/useStore'
+import { CloudinaryUploadWidget } from 'react-cloudinary-uploader'
 
 
 const pictureUploaderOptions = {
-  clientAllowedFormats: ['jpg', 'jpeg', 'png', 'gif'], // allowed file formats
+  clientAllowedFormats: ['jpg', 'jpeg', 'png'], // allowed file formats
   resourceType: 'image', // resource type, either 'image' or 'video'
-  cropping: true, // cropping is enabled
+  cropping: false, // cropping is enabled
   croppingAspectRatio: 1, // square aspect ratio
   croppingShowDimensions: true, // show cropping dimensions
   croppingValidateDimensions: true, // validate image dimensions after cropping
   maxFileSize: 10000000, // max file size in bytes (10 MB)
   folder: 'images', // Cloudinary folder to upload to
-  sources: ['local', 'url', 'camera', 'google_drive'] // upload sources, either 'local', 'url', 'camera' or 'google_drive'
+  sources: ['local'] // upload sources, either 'local', 'url', 'camera' or 'google_drive'
 }
 
-interface IForm extends IProducto {}
-
-type Area = {
-  width: number
-  height: number
-  x: number
-  y: number
-}
+interface IForm extends IProducto { }
 
 export default function FormProduct() {
-  // const handleUploadSuccess = (info) => {
-  //   console.log('Upload success:', info)
-  // }
-
-  // const handleUploadFailure = (error) => {
-  //   console.error('Upload error:', error)
-  // }
-
   const [disabled, setDisabled] = useState(false)
   const [img, setImg] = useState('')
-  const [zoom, setZoom] = useState(1)
   const setStateDialogProduct = useStore((state) => state.setStateDialogProduct)
   const objProduct = useStore((store) => store.objProduct)
   const categories = useStore((state) => state.categories)
-
-  const setImageCrop = useStore((state) => state.setImageCrop)
-  const imageCrop = useStore((state) => state.imageCrop)
-  const resetImageCrop = useStore((state) => state.resetImageCrop)
 
   const { mutateAsync: addProduct } = useMutation({
     mutationKey: ['agregarProducto'],
@@ -87,7 +67,6 @@ export default function FormProduct() {
           precio,
           descripcion,
           imagen: objProduct.imagen,
-          imagenBase64: imageCrop,
           categoria_id: categoria.id
         },
         {
@@ -105,13 +84,13 @@ export default function FormProduct() {
       return
     }
 
-    if (!imageCrop.length) return
+    if (!img.length) return
 
     setDisabled(true)
     // const { nombre, precio, descripcion, categoria } = data
 
     addProduct(
-      { nombre, precio, descripcion, imagen: '', imagenBase64: imageCrop, categoria_id: categoria.id },
+      { nombre, precio, descripcion, imagen: img, categoria_id: categoria.id },
       {
         onSuccess: () => {
           setStateDialogProduct(false)
@@ -122,29 +101,22 @@ export default function FormProduct() {
     )
   }
 
-  const onCropComplete = async (croppedArea: Area) => {
-    console.log('onCropComplete')
-    try {
-      const image = await getCroppedImg(img, croppedArea, { width: 700, height: 400 * 1 })
-      // setCroppedImg(image)
-      setImageCrop(image)
-      // console.log(image)
-    } catch (e) {
-      // console.error(e)
-    }
-  }
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('onChange')
-    if (e.target.files === null) return
-    setImg(URL.createObjectURL(e.target.files[0]))
-  }
+
+
 
   const cancel = () => {
     setStateDialogProduct(false)
     setImg('')
-    // resetImageCrop('')
-    setImageCrop('')
+  }
+
+  const handleUploadSuccess = (info: any) => {
+    console.log('Upload success:', info)
+    setImg(info.secure_url)
+  }
+
+  const handleUploadFailure = (error: any) => {
+    console.error('Upload error:', error)
   }
 
   useEffect(() => {
@@ -234,13 +206,45 @@ export default function FormProduct() {
           Upload Picture
         </button> */}
         {/* </CloudinaryUploadWidget> */}
+
+
+        {/* {img} */}
+
         <div className='tw-col-span-2'>
+
+          {img
+            ? <img src={img} width='230' height='130' />
+            : null
+          }
+
+          <div className='tw-flex tw-items-center tw-justify-center'>
+
+
+
+            <CloudinaryUploadWidget
+              cloudName='dlltfgm4b'
+              uploadPreset='yp5ecxto'
+              options={pictureUploaderOptions}
+              onUploadSuccess={handleUploadSuccess}
+              onUploadFailure={handleUploadFailure}>
+              <Button type='button' size='small'
+                startIcon={<BiUpload />}
+                className='!capitalize'
+                color='secondary'
+                variant='contained'
+                disableElevation>
+                Subir Imagen
+              </Button>
+            </CloudinaryUploadWidget>
+          </div>
+        </div>
+
+        {/* <div className='tw-col-span-2'>
           {objProduct.id && !img.length ? (
             <Image alt='dasdsa' width='230' height='130' src={`${objProduct.imagen}`} />
           ) : (
             <Cropper src={img} zoom={zoom} aspect={400 / 700} onZoomChange={setZoom} onCropComplete={onCropComplete} />
           )}
-          {/* {img} */}
 
           <div className='tw-flex tw-items-center tw-justify-center'>
             <label className='tw-flex tw-items-center tw-gap-2 tw-py-1 tw-px-2 tw-place-items-center tw-bg-gray-800 tw-text-white tw-hover:bg-gray-900 tw-shadow-lg tw-rounded-md tw-cursor-pointer'>
@@ -249,7 +253,9 @@ export default function FormProduct() {
               <input onChange={(e) => onChange(e)} type='file' className='tw-hidden' />
             </label>
           </div>
-        </div>
+        </div> */}
+
+
       </DialogContent>
       <DialogActions className='!tw-flex !tw-justify-between tw-col-span-full'>
         <Button

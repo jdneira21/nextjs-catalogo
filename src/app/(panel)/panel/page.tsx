@@ -18,7 +18,7 @@ export default function PagePanel() {
   const pictureUploaderOptions = {
     clientAllowedFormats: ['jpg', 'jpeg', 'png', 'gif'], // allowed file formats
     resourceType: 'image', // resource type, either 'image' or 'video'
-    cropping: true, // cropping is enabled
+    cropping: false, // cropping is enabled
     croppingAspectRatio: 1, // square aspect ratio
     croppingShowDimensions: true, // show cropping dimensions
     croppingValidateDimensions: true, // validate image dimensions after cropping
@@ -27,11 +27,11 @@ export default function PagePanel() {
     sources: ['local'] // upload sources, either 'local', 'url', 'camera' or 'google_drive'
   }
 
-  const handleUploadSuccess = (info) => {
+  const handleUploadSuccess = (info: any) => {
     console.log('Upload success:', info)
   }
 
-  const handleUploadFailure = (error) => {
+  const handleUploadFailure = (error: any) => {
     console.error('Upload error:', error)
   }
 
@@ -39,7 +39,7 @@ export default function PagePanel() {
     <>
       <div className='tw-flex tw-flex-col tw-gap-4 tw-p-2'>
         <div className='tw-flex tw-gap-2'>
-          <CloudinaryUploadWidget
+          {/* <CloudinaryUploadWidget
           
             cloudName='dlltfgm4b'
             uploadPreset='yp5ecxto'
@@ -58,7 +58,7 @@ export default function PagePanel() {
               className='custom-class'>
               Upload Picture
             </button>
-          </CloudinaryUploadWidget>
+          </CloudinaryUploadWidget> */}
           <Button
             onClick={() => setStateDialogCategory(true)}
             variant='contained'

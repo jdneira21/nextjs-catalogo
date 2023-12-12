@@ -24,7 +24,6 @@ model Producto {
   precio       Float
   descripcion  String
   imagen       String
-  imagenBase64 String
   categoria    Categoria @relation(fields: [categoria_id], references: [id])
   categoria_id Int
   createdAt    DateTime  @default(now())

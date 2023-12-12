@@ -15,16 +15,16 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { nombre, precio, descripcion, imagenBase64, categoria_id } = await request.json()
+  const { nombre, precio, descripcion, imagen, categoria_id } = await request.json()
 
-  console.log({ nombre, precio, descripcion, categoria_id })
+  console.log({ nombre, precio, descripcion, imagen, categoria_id })
 
   const slug = slugify(nombre, { lower: true })
 
   console.log(slug)
   console.log('slug')
 
-  const imagex = await uploadBase64Data(slug, imagenBase64)
+  // const imagex = await uploadBase64Data(slug, imagenBase64)
 
   console.log('uploadBase64Data(slug, imagenBase64)')
 
@@ -37,8 +37,7 @@ export async function POST(request: Request) {
       nombre,
       precio: +precio,
       descripcion,
-      imagen: imagex,
-      imagenBase64: '',
+      imagen,
       categoria_id,
       slug: slug
     },
@@ -63,8 +62,7 @@ export async function PUT(request: Request) {
       nombre,
       precio: +precio,
       descripcion,
-      imagen: !imagenBase64 ? imagen : slug + '.jpg',
-      imagenBase64: '',
+      imagen: imagen,
       categoria_id,
       slug: slug
     },

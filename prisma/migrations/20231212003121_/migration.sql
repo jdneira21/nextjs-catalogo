@@ -15,7 +15,6 @@ CREATE TABLE "Producto" (
     "precio" DOUBLE PRECISION NOT NULL,
     "descripcion" TEXT NOT NULL,
     "imagen" TEXT NOT NULL,
-    "imagenBase64" TEXT NOT NULL,
     "categoria_id" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
