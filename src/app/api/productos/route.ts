@@ -1,4 +1,3 @@
-import { uploadBase64Data } from '@/helpers'
 import { prisma } from '@/libs/prisma'
 import { NextResponse } from 'next/server'
 import slugify from 'slugify'
@@ -48,13 +47,13 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const { id, nombre, precio, descripcion, imagen, imagenBase64, categoria_id } = await request.json()
+  const { id, nombre, precio, descripcion, imagen, categoria_id } = await request.json()
 
   const slug = slugify(nombre, { lower: true })
 
-  if (imagenBase64) {
-    uploadBase64Data(slug, imagenBase64)
-  }
+  // if (imagenBase64) {
+  //   uploadBase64Data(slug, imagenBase64)
+  // }
 
   const producto = await prisma.producto.update({
     where: { id },
