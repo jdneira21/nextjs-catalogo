@@ -76,13 +76,12 @@ export const agregarProducto = async ({
   precio,
   descripcion,
   imagen,
-  imagenBase64,
   categoria_id
 }: Partial<IProducto>): Promise<IProducto> => {
   console.log('agregarProducto')
   const response = await fetch(`/api/productos`, {
     method: 'POST',
-    body: JSON.stringify({ nombre, precio, descripcion, imagen, imagenBase64, categoria_id }),
+    body: JSON.stringify({ nombre, precio, descripcion, imagen, categoria_id }),
     headers: { 'Content-type': 'application/json' }
   })
   return await response.json()
@@ -94,7 +93,6 @@ export const editarProducto = async ({
   precio,
   descripcion,
   imagen,
-  imagenBase64,
   categoria_id
 }: Partial<IProducto>): Promise<IProducto> => {
   // console.log({
@@ -108,7 +106,7 @@ export const editarProducto = async ({
   // })
   const response = await fetch(`/api/productos`, {
     method: 'PUT',
-    body: JSON.stringify({ id, nombre, precio, descripcion, imagen, imagenBase64, categoria_id }),
+    body: JSON.stringify({ id, nombre, precio, descripcion, imagen, categoria_id }),
     headers: { 'Content-type': 'application/json' }
   })
 
