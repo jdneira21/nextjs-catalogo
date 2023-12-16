@@ -1,3 +1,152 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: relative;
+  width: 30px;
+  height: 24px;
+  color: white;
+  /* left: 36px;
+  top: 36px; */
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #a90000;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: #a90000;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #290a0b;
+  padding: 2rem 1rem;
+  font-size: 1.15rem;
+}
+
+/* @layer components { */
+/* .linkSidebar {} */
+
+/* } */
+
+
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  /* padding: 0.8em; */
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+  font-family: 'Varela Round', sans-serif;
+  color: #290a0b;
+  background-color: #ffe1e2;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  /* background-color: #b32e32; */
+  /* color: white; */
+
+  @apply hover:tw-bg-[#b32e32] hover:tw-text-white tw-rounded-lg tw-text-sm tw-px-4 tw-py-2 tw-no-underline tw-mb-2;
+}
+
+.bounce {
+  /* margin: 50px auto; */
+  /* background-color: blue; */
+  /* width: 300px; */
+  /* font-size: 50px; */
+  animation: bounce 1s infinite;
+  text-align: center;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(60% 20% 60% 20%);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+.revealing-image {
+  view-timeline-name: --revealing-image;
+  view-timeline-axis: block;
+  animation: linear reveal both;
+  animation-timeline: --revealing-image;
+  animation-range: entry 10% cover 60%;
+  box-shadow: 0 0 0 black;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* .bmOverlay {
+  background-color: '#ff004433';
+  left: '0';
+  top: '0';
+}
+
+.bmMenuWrap {
+  position: 'fixed';
+  height: '100%';
+  top: '0';
+  left: '0';
+} */
+
+
+.spanLogo {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 1.1rem;
+  color: white;
+}

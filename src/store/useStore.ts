@@ -9,6 +9,9 @@ interface State {
   stateDialogDeleteCategory: boolean
   stateDialogDeleteProduct: boolean
   stateDialogProduct: boolean
+
+  stateDialogFinalProduct: boolean
+
   objCategory: ICategoria
   objProduct: IProducto
   objDeleteCategory: ICategoria
@@ -28,6 +31,8 @@ interface Action {
   setStateDialogProduct: (bool: boolean, product?: IProducto) => void
   setStateDialogDeleteProduct: (bool: boolean, product?: IProducto) => void
 
+  setStateDialogFinalProduct: (bool: boolean) => void
+
   setCategories: (array: ICategoria[]) => void
 
   setImageCrop: (dataImage: string) => void
@@ -42,6 +47,7 @@ const initialState: State = {
   stateDialogDeleteCategory: false,
   stateDialogDeleteProduct: false,
   stateDialogProduct: false,
+  stateDialogFinalProduct: false,
   objCategory: {} as ICategoria,
   objProduct: {} as IProducto,
   objDeleteCategory: {} as ICategoria,
@@ -92,6 +98,10 @@ export default create<State & Action>()((set, get) => ({
 
   setStateDialogProduct: (bool, objProduct) => {
     set({ stateDialogProduct: bool, objProduct: objProduct ?? ({} as IProducto) })
+  },
+
+  setStateDialogFinalProduct: (bool) => {
+    set({ stateDialogFinalProduct: bool })
   },
 
   setCategories: (array) => {

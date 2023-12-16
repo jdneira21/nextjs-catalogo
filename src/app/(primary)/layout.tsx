@@ -5,7 +5,7 @@ export default function LayoutPrimary({ children }: { children: ReactNode }) {
   return (
     <>
       <Sidebar />
-      <div>{children}</div>
+      <div className='tw-border tw-border-red-400' >{children}</div>
     </>
   )
 }

@@ -21,6 +21,7 @@
     "material-react-table": "^2.0.4",
     "next": "14.0.3",
     "react": "^18",
+    "react-burger-menu": "^3.0.9",
     "react-cloudinary-uploader": "^1.1.2",
     "react-cropper-custom": "^1.2.7",
     "react-dom": "^18",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-burger-menu": "^2.8.7",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",

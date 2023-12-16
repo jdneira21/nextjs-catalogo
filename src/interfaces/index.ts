@@ -11,7 +11,6 @@ export interface IProducto {
   precio: number
   descripcion: string
   imagen: string
-  imagenBase64: string
   cantidad: number
   categoria_id: number
   categoria: ICategoria
